@@ -39,6 +39,43 @@ const calenderRow = [
     }
 ];
 
+// initialise trackChanges object - capture date/time when page loaded
+let trackChanges;
+
+$(document).ready(function(){
+
+//immediately invoked function to set up object with current hour and current date
+/* IIFE */
+(function initialise() {
+
+    //define blueprint of trackchanges object
+
+    function monitorObject(currentHour, currentDate, lastModifedTimestamp) {
+        this.currentHour = currentHour;
+        this.currentDate = currentDate;
+        this.lastModifedTimestamp = lastModifedTimestamp;
+    };
+
+    //declare variables
+
+    let $currentHour, $currentDate, $currentTimestamp;
+
+    //set values of variables utilising moment.js
+
+    $currentHour = Number(moment().format('HH'));
+    $currentDate = moment().format('YYYY-MM-DD');
+    $currentTimestamp = moment().format('YYYY-MM-DD HH:mm:ss');
+
+    //create instance of trackchanges object and pass arguments
+
+    trackChanges = new monitorObject($currentHour, $currentDate, $currentTimestamp);
+
+    //create console 'log' to confirm trackchanges object created (useful for testing)
+    
+    console.log('trackchanges object created');
+
+})();
+
 //function to display current datetime to page, and track current hour
 function displayClock() {
 
@@ -57,3 +94,5 @@ function displayClock() {
 }
 
 setInterval(displayClock, 1000);
+
+});
