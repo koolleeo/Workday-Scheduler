@@ -144,4 +144,47 @@ function storeAreaInput(date, textAreaId, textArea) {
     this.textArea = textArea;
 }
 
+
+//create a function to store text area input to local storage when button clicked
+function storeInput(event) {
+
+    //get local storage - overwrite when date & id already exists
+    let storage = localStorage.getItem("calendarTasks");
+    let storageArr = JSON.parse(storage);
+
+    //input data
+    let textAreaId = event.currentTarget.previousElementSibling.id;
+    console.log(textAreaId);
+
+    let textArea = event.currentTarget.previousElementSibling.value;
+    console.log(textArea);
+
+    let storeInput = new storeAreaInput(trackChanges.currentDate, textAreaId, textArea);
+    console.log(storeInput);
+
+    //create an empty array and push instance of storage object
+    let array = [];
+    array.push(storeInput);
+
+    //if storage array already exists, replace existing entry if exists and recreate array of objects for current date
+    if (storageArr != null) {
+
+    storageArr.forEach(arr => {
+
+        if (arr.date == trackChanges.currentDate && arr.textAreaId == textAreaId) {
+            return;
+        } else {
+            array.push(arr)
+        }
+    })
+
+    }
+
+    localStorage.setItem("calendarTasks", JSON.stringify(array));
+
+};
+
+
+$("button").click(storeInput)
+
 });
