@@ -79,6 +79,7 @@ $(document).ready(function(){
 
     //trigger initial application of CSS classes
     calenderRowCSS();    
+    renderStorage();
 
 })();
 
@@ -182,9 +183,37 @@ function storeInput(event) {
 
     localStorage.setItem("calendarTasks", JSON.stringify(array));
 
+    //refresh/render
+    renderStorage();
+
 };
 
+$("button").click(storeInput);
 
-$("button").click(storeInput)
+//create function to clear textArea and render local storage when called
+function renderStorage() {
+
+    //reset textarea
+    $("textarea").val("");
+
+    let storage = localStorage.getItem("calendarTasks");
+    let storageArr = JSON.parse(storage);
+    console.log('render');
+
+    if (storageArr != null) {
+
+        storageArr.forEach(arr => {
+
+            if (arr.date == trackChanges.currentDate) {
+
+            $(`#${arr.textAreaId}`).val(arr.textArea)
+            console.log(`#${arr.textAreaId}`);
+            }
+
+        })
+
+    }
+
+};
 
 });
