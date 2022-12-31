@@ -71,8 +71,11 @@ $(document).ready(function(){
     trackChanges = new monitorObject($currentHour, $currentDate, $currentTimestamp);
 
     //create console 'log' to confirm trackchanges object created (useful for testing)
-    
+
     console.log('trackchanges object created');
+
+    //trigger initial application of CSS classes
+    calenderRowCSS();    
 
 })();
 
@@ -94,5 +97,18 @@ function displayClock() {
 }
 
 setInterval(displayClock, 1000);
+
+//create function to apply CSS class based on time : by hour
+function calenderRowCSS() {
+
+    calenderRow.forEach((arr) => {
+
+        $(arr.textArea).addClass(trackChanges.currentHour < arr.hour ? 'future' : trackChanges.currentHour == arr.hour ? 'present' : 'past')
+        .removeClass(trackChanges.currentHour < arr.hour ? 'past present' : trackChanges.currentHour == arr.hour ? 'future past' : 'present future');
+
+        console.log(arr.textArea);
+    })
+
+}
 
 });
