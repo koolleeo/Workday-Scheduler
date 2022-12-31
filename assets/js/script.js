@@ -134,4 +134,14 @@ objProxy = new Proxy(trackChanges, {
 
 });
 
+//CREATE LOCAL STORAGE SOLUTION
+/* just needs to storage for current date - wipe when the day changes to next day */
+
+//create blueprint for storage object
+function storeAreaInput(date, textAreaId, textArea) {
+    this.date = date;
+    this.textAreaId = textAreaId;
+    this.textArea = textArea;
+}
+
 });
