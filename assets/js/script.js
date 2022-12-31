@@ -95,6 +95,15 @@ function displayClock() {
     //current date
     let currentDate = moment().format('YYYY-MM-DD');
 
+    //update global currentHour varible
+    if (hourStage !== trackChanges.currentHour) {
+ 
+        trackChanges.lastModifedTimestamp = moment().format('YYYY-MM-DD HH:mm:ss');
+        trackChanges.currentDate = currentDate
+        objProxy.currentHour = hourStage;
+    
+        }
+
     //render current day to page
     $('#currentDay').text(timeNow);
 
@@ -130,6 +139,7 @@ objProxy = new Proxy(trackChanges, {
 
         //execute function on change
         calenderRowCSS();
+        renderStorage();
         return true; 
     },
 
