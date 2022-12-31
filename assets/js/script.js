@@ -42,6 +42,9 @@ const calenderRow = [
 // initialise trackChanges object - capture date/time when page loaded
 let trackChanges;
 
+//initialise objProxy variable - proxy object to listen for changes to current hour (needed to trigger CSS class change)
+let objProxy;
+
 $(document).ready(function(){
 
 //immediately invoked function to set up object with current hour and current date
@@ -106,9 +109,29 @@ function calenderRowCSS() {
         $(arr.textArea).addClass(trackChanges.currentHour < arr.hour ? 'future' : trackChanges.currentHour == arr.hour ? 'present' : 'past')
         .removeClass(trackChanges.currentHour < arr.hour ? 'past present' : trackChanges.currentHour == arr.hour ? 'future past' : 'present future');
 
+        //log textArea to console for validation
         console.log(arr.textArea);
     })
 
 }
+
+//create a proxy object that listens for changes of currentHour on trackChanges object
+
+objProxy = new Proxy(trackChanges, {  
+
+    set: function (target, key, value) { 
+
+        //log change to console for validation
+        console.log(`${key} changed from ${trackChanges.currentHour} to ${value}`);   
+
+        //updated value of target object
+        target[key] = value;
+
+        //execute function on change
+        calenderRowCSS();
+        return true; 
+    },
+
+});
 
 });
